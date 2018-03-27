@@ -23,20 +23,21 @@ router.post('/add', function(req, res, next){
         });
     }
    else{
-
+        req.flash('error', 'Please enter a task.');
+        res.redirect('/');
     }
 });
 /*finish the task and send to completed tasks*/
 router.post('/done', function(req, res, next){
   Task.findByIdAndUpdate(req.body._id, {completed:true})
       .then((originalTask) => {
-
     if(originalTask){
-      res.redirect('/');
+        req.flash('info', originalTask.text, ' marked as done!');
+        res.redirect('/');
     }else{
-      var err = new Error('Not Found');
-      err.status = 404;
-      next(err);
+        var err = new Error('Not Found');
+        err.status = 404;
+        next(err);
     }
   })
       .catch((err) => {
@@ -57,6 +58,7 @@ router.post('/delete', function(req, res, next){
   Task.findByIdAndRemove(req.body._id)
       .then((deletedTask) => {
     if(deletedTask){
+        req.flash('info', 'Task deleted');
       res.redirect('/');
     } else{
       var error = new Error('Task not found');
@@ -69,10 +71,11 @@ router.post('/delete', function(req, res, next){
 router.post('/alldone', function(req, res, next){
   Task.updateMany({completed: false}, {completed: true})
       .then(()=> {
-    res.redirect('/completed');
+      req.flash('info', 'All tasks are done!');
+      res.redirect('/');
       })
       .catch((err) => {
-    next(err);
+      next(err);
       })
 });
 /*getting a specific page per task*/

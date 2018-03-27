@@ -26,3 +26,9 @@ li{
   color: white;
   background-color: red;
 }
+.error-message{
+  color:red;
+}
+.info-message{
+  color:green;
+}
