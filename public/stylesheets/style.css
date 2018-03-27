@@ -6,3 +6,23 @@ body {
 a {
   color: #00B7FF;
 }
+/*makes the elements align to the right of each other*/
+.delete-form, .done-form{
+  display: inline-block;
+}
+
+.done-button{
+  background-color: aqua;
+}
+
+.delete-button{
+  background-color: red;
+  color: white;
+}
+li{
+  padding: 10px;
+}
+#deleteButton{
+  color: white;
+  background-color: red;
+}

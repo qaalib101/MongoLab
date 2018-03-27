@@ -5,8 +5,17 @@
             {{#each tasks}}
                 <li>{{this.text}}</li>
             {{/each}}
+            <br>
+            <!-- delete button sent to /delete done route handler -->
+            <form action="/deleteDone" method="POST">
+            <button  id="deleteButton">
+                Delete completed tasks
+            </button>
+        </form>
         </ul>
     {{else}}
         <p>No tasks have been completed</p>
     {{/if}}
 </div>
+<!-- script source -->
+<script src="/javascripts/confirmDelete.js"></script>

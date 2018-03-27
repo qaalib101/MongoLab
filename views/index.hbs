@@ -9,6 +9,7 @@
     {{#if tasks}}
         <ol>
             {{#each tasks}}
+                <!-- per task forms a done and delete button -->
                 <li><a href="task/{{this._id}}">{{this.text}}</a>
                     <form class="done-form" action="/done" method="POST">
                         <input class="done-button" type="submit" name="done" value="Done!">
@@ -25,6 +26,7 @@
         <P>No tasks to do</P>
     {{/if}}
     {{#if tasks}}
+        <!-- all done at the end of the page -->
         <div class="all-done">
             <form action="/alldone" method="post">
                 <input class="all-done-button" type="submit" value="All done!">
