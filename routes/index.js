@@ -13,6 +13,7 @@ router.get('/', function(req, res, next) {
 });
 /*Add a new task*/
 router.post('/add', function(req, res, next){
+
    var t = new Task({text:req.body.text, completed: false});
     if(req.body.text){
         t.save().then((newTask) => {

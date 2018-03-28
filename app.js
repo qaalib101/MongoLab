@@ -8,7 +8,8 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 
 var config = require('./config/db_config');
-var db_url = process.env.MONGO_URL;
+//var db_url = process.env.MONGO_URL;
+var db_url = config.db_url;
 
 mongoose.connect(db_url)
     .then(() => {console.log('Connected to mLab');})

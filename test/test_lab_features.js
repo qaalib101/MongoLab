@@ -36,7 +36,11 @@
 
 let db_config = require('../config/db_config');
 let test_db_url = process.env.TEST_MONGO_URL;  // Verify that this environment variable is configured on your computer
+
+console.log('db url = ' + test_db_url);
+
 db_config.db_url = test_db_url;
+
 
 const TEST_DB_NAME = 'test_todo';   // TODO change this if your database name is different
 const TEST_DB_COLLECTION = 'tasks';
