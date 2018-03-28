@@ -3,6 +3,7 @@
     <envs>
       <env name="DEBUG" value="MongoLab:*" />
       <env name="MONGO_URL" value="mongodb://qaalib101:Hooyo101@ds061620.mlab.com:61620/si8822fb" />
+      <env name="TEST_MONGO_URL" value="mongodb://qaalib101:Hooyo101@ds221148.mlab.com:21148/test_todo" />
     </envs>
     <browser url="http://localhost:3000/" />
     <EXTENSION ID="com.jetbrains.nodejs.remote.docker.NodeJSDockerRunConfigurationExtension">

@@ -7,6 +7,7 @@ var session = require('express-session');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 
+var config = require('./config/db_config');
 var db_url = process.env.MONGO_URL;
 
 mongoose.connect(db_url)
