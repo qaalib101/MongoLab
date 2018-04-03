@@ -4,11 +4,13 @@
         <p>{{task.text}} was created on {{task.dateCreated}} and is completed</p>
         <form action="/delete" method="POST" class="delete-form">
             <input type="submit" value="Delete">
+            <input type="hidden" name="_id" value="{{this._id}}">
         </form>
     {{else}}
         <p>{{task.text}} is not yet completed</p>
         <form action="/done" method="POST" class="done-form">
             <input type="submit" value="Done!">
+            <input type="hidden" name="_id" value="{{this._id}}">
         </form>
     {{/if}}
 </div>
