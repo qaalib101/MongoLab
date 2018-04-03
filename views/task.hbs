@@ -1,8 +1,14 @@
 <h2>{{task.text}}</h2>
 <div class = "task-info">
     {{#if task.completed}}
-        <p>{{task.text}} is completed</p>
+        <p>{{task.text}} was created on {{task.dateCreated}} and is completed</p>
+        <form action="/delete" method="POST" class="delete-form">
+            <input type="submit" value="Delete">
+        </form>
     {{else}}
         <p>{{task.text}} is not yet completed</p>
+        <form action="/done" method="POST" class="done-form">
+            <input type="submit" value="Done!">
+        </form>
     {{/if}}
 </div>

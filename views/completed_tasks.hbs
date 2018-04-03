@@ -3,12 +3,12 @@
     {{#if tasks}}
         <ul>
             {{#each tasks}}
-                <li>{{this.text}}</li>
+                <li><a href="task/{{this._id}}">{{this.text}} was created on {{this.dateCreated}} and completed on {{this.dateCompleted}}</a></li>
             {{/each}}
             <br>
             <!-- delete button sent to /delete done route handler -->
             <form action="/deleteDone" method="POST">
-            <button  id="deleteButton">
+            <button  id="delete-all-done">
                 Delete completed tasks
             </button>
         </form>

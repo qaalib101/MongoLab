@@ -6,7 +6,9 @@ var Schema = mongoose.Schema;
 
 var taskSchema = new Schema({
     text:String,
-    completed: Boolean
+    completed: Boolean,
+    dateCreated: Date,
+    dateCompleted: Date
 });
 
 var Task = mongoose.model('Task', taskSchema);

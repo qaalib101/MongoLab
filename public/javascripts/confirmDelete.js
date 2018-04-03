@@ -1,5 +1,5 @@
 // delete button
-var deleteButton = document.querySelector('#deleteButton');
+var deleteButton = document.querySelector('.delete-all-done');
 
 // event listener for the delete button
 deleteButton.addEventListener('click', function(ev){

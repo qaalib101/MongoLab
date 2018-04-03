@@ -13,8 +13,8 @@ router.get('/', function(req, res, next) {
 });
 /*Add a new task*/
 router.post('/add', function(req, res, next){
-
-   var t = new Task({text:req.body.text, completed: false});
+    var newDate = new Date();
+   var t = new Task({text:req.body.text, completed: false, dateCreated: newDate});
     if(req.body.text){
         t.save().then((newTask) => {
             console.log('The new task created is ', newTask);
@@ -30,11 +30,12 @@ router.post('/add', function(req, res, next){
 });
 /*finish the task and send to completed tasks*/
 router.post('/done', function(req, res, next){
-  Task.findByIdAndUpdate(req.body._id, {completed:true})
+    var newDate = new Date();
+  Task.findByIdAndUpdate(req.body._id, {completed:true, dateCompleted: newDate})
       .then((originalTask) => {
     if(originalTask){
-        req.flash('info', originalTask.text, ' marked as done!');
         res.redirect('/');
+        req.flash('info', originalTask.text, ' marked as done!');
     }else{
         var err = new Error('Not Found');
         err.status = 404;
@@ -59,18 +60,24 @@ router.post('/delete', function(req, res, next){
   Task.findByIdAndRemove(req.body._id)
       .then((deletedTask) => {
     if(deletedTask){
+        res.redirect('/');
         req.flash('info', 'Task deleted');
-      res.redirect('/');
     } else{
       var error = new Error('Task not found');
       error.status = 404;
       next(error);
     }
       })
+      .catch((err) => {
+          var error = new Error('Task not found');
+          error.status = 404;
+          next(err);
+      });
 });
 /*marks all the tasks as done*/
 router.post('/alldone', function(req, res, next){
-  Task.updateMany({completed: false}, {completed: true})
+    var newDate = new Date();
+  Task.updateMany({completed: false}, {completed: true}, {dateCompleted: newDate})
       .then(()=> {
       req.flash('info', 'All tasks are done!');
       res.redirect('/');
@@ -87,18 +94,21 @@ router.get('/task' + '/:_id', function(req, res, next){
           res.render('task', {task: doc});
       }
       else{
-    next();
+        next();
     }
       })
     .catch((err) => {
-    next(err);
+        var error = new Error('Task not found');
+        error.status = 404;
+        next(err);
     });
 });
 /*delete all the completed task in the completed page*/
 router.post('/deleteDone', function(req, res, next){
     Task.deleteMany({completed:true})
         .then(()=>{
-          res.redirect('/');
+            res.redirect('/');
+            req.flash('info', 'All completed tasks deleted');
         })
         .catch((err) => {
             next(err);
