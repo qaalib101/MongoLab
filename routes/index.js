@@ -39,11 +39,13 @@ router.post('/done', function(req, res, next){
     }else{
         var err = new Error('Not Found');
         err.status = 404;
+        console.log(err);
         next(err);
     }
   })
       .catch((err) => {
     next(err);
+    console.log(err);
       })
 });
 /*completed page*/
@@ -57,6 +59,7 @@ router.get('/completed', function(req, res, next) {
 });
 /*delete the specific tasks*/
 router.post('/delete', function(req, res, next){
+    console.log(req.body);
   Task.findByIdAndRemove(req.body._id)
       .then((deletedTask) => {
     if(deletedTask){
@@ -65,12 +68,14 @@ router.post('/delete', function(req, res, next){
     } else{
       var error = new Error('Task not found');
       error.status = 404;
+      console.log(err);
       next(error);
     }
       })
       .catch((err) => {
           var error = new Error('Task not found');
           error.status = 404;
+          console.log(err);
           next(err);
       });
 });
