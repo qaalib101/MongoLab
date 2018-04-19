@@ -2,14 +2,19 @@
  * Created by si8822fb on 3/20/2018.
  */
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
-var taskSchema = new Schema({
-    text:String,
-    completed: Boolean,
-    dateCreated: Date,
-    dateCompleted: Date
+
+var taskSchema = new mongoose.Schema ({
+
+    text: String,
+    completed : Boolean,
+
+
+    _creator : { type : ObjectId, ref : 'User' }
+
 });
+
 
 var Task = mongoose.model('Task', taskSchema);
 
