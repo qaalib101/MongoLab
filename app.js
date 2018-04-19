@@ -13,15 +13,16 @@ var passportConfig = require('./config/passport')(passport);
 
 
 var config = require('./config/db_config');
-//var db_url = process.env.MONGO_URL;
-var db_url = config.db_url;
+var db_url = process.env.MONGO_URL;
 
 mongoose.connect(db_url)
     .then(() => {console.log('Connected to mLab');})
     .catch((err) => {console.log('Error connecting to mLab', err); });
 
-var tasks = require('./routes/tasks');
+
 var auth = require('./routes/auth');
+var tasks = require('./routes/tasks');
+var users = require('./routes/users');
 
 
 
@@ -43,9 +44,18 @@ app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var store = MongoDBStore({uri: db_url, collection: 'tasks'});
+ app.use(session({
+     secret: 'top secret',
+     resave: true,
+     saveUninitialized: true,
+     store:store
+ }));
+ app.use(passport.initialize());
+ app.use(passport.session());
 
 app.use('/auth', auth);
 app.use('/', tasks);
+app.use('/users', users);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

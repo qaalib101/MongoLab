@@ -1,6 +1,3 @@
-/**
- * Created by si8822fb on 4/17/2018.
- */
 var LocalStrategy = require('passport-local');
 
 var User = require('../models/user');
