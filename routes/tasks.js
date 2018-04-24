@@ -32,8 +32,7 @@ router.post('/add', function(req, res, next){
 
     else {
         // Save new task with text provided, for the current user, and completed = false
-        var task = Task({ _creator: req.user, text : req.body.text, completed: false});
-
+        var task = Task({ _creator: req.user, text : req.body.text, completed: false, dateCreated: new Date()});
         task.save()
             .then(() => {
                 res.redirect('/');
@@ -45,7 +44,7 @@ router.post('/add', function(req, res, next){
 });
 /*finish the task and send to completed tasks*/
 router.post('/done', function(req, res, next){
-    Task.findOneAndUpdate( {_id: req.body._id, _creator: req.user.id}, {completed: true})
+    Task.findOneAndUpdate( {_id: req.body._id, _creator: req.user.id}, {completed: true, dateCompleted: new Date()})
         .then( (task) => {
 
             if (!task) {
@@ -64,7 +63,7 @@ router.post('/done', function(req, res, next){
 });
 /*completed page*/
 router.get('/completed', function(req, res, next) {
-    Task.find({_creator: req.user._id, completed:true})
+    Task.find({_creator: req.user._id, completed:true, dateDeleted: null})
         .then((docs) => {
             res.render('completed_tasks', {tasks: docs});
         }).catch((err) => {
@@ -74,15 +73,15 @@ router.get('/completed', function(req, res, next) {
 /*delete the specific tasks*/
 router.post('/delete', function(req, res, next){
 
-    Task.findOneAndRemove( {_id: req.body._id, _creator: req.user.id}, {completed: true} )
+    Task.findOneAndRemove( {_id: req.body._id, _creator: req.user._id}, {completed: true, dateDeleted: new Date()} )
         .then( (task) => {
             if (!task)  { // No task deleted, therefore the ID is not valid,
                 //or did not belong to the current logged in user.
                 res.status(403).send('This is not your task!');
             }
             else {
+                res.redirect('/completed');
                 req.flash('info', 'Task deleted');
-                res.redirect('/')
             }
         })
         .catch( (err) => {
@@ -93,7 +92,7 @@ router.post('/delete', function(req, res, next){
 /*marks all the tasks as done*/
 router.post('/alldone', function(req, res, next){
 
-    Task.update( {_creator: req.user, completed: false}, {completed: true}, {multi: true})
+    Task.update( {_creator: req.user, completed: false}, {completed: true, dateCompleted: new Date()}, {multi: true})
         .then( (result) => {
             req.flash('info', 'All tasks are done!');
             res.redirect('/')
@@ -104,7 +103,7 @@ router.post('/alldone', function(req, res, next){
 });
 /*getting a specific page per task*/
 router.get('/task' + '/:_id', function(req, res, next){
-    Task.findById(req.params.id).then( (task) => {
+    Task.findById(req.params._id).then( (task) => {
 
         if (!task) {
             res.status(404).send('Task not found.');

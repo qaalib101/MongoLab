@@ -7,7 +7,7 @@
             <input type="submit" value="Delete">
         </form>
     {{else}}
-        <p>{{task.text}} is not yet completed</p>
+        <p>{{task.text}} was created on {{task.dateCreated}} and is not yet completed</p>
         <form action="/done" method="POST" class="done-form">
             <input type="hidden" name="_id" value="{{task._id}}">
             <input type="submit" value="Done!">

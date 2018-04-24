@@ -9,7 +9,9 @@ var taskSchema = new mongoose.Schema ({
 
     text: String,
     completed : Boolean,
-
+    dateCreated: Date,
+    dateCompleted: Date,
+    dateDeleted: Date,
 
     _creator : { type : ObjectId, ref : 'User' }
 
