@@ -4,12 +4,14 @@
         <ul>
             {{#each tasks}}
                 <li><a href="task/{{this._id}}">{{this.text}}</a> was created on {{this.dateCreated}} and completed on {{this.dateCompleted}}</li>
-            {{/each}}
-            <!-- delete button sent to /delete done route handler -->
+                <!-- delete button sent to /delete done route handler -->
             <form action="/delete" method="POST">
-            <button id="delete">
-                Delete task
-            </button>
+                <button id="delete">
+                    Delete task
+                </button>
+                <input type="hidden" name="_id" value="{{this._id}}">
+            {{/each}}
+
         </form>
         </ul>
     <form action="/deleteDone" method="POST">
